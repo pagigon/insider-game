@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import RegistPlayer from '../views/RegistPlayer.vue'
+import ConfirmRole from '../views/ConfirmRole.vue'
+import Battle from '../views/Battle.vue'
 
 Vue.use(VueRouter)
 
@@ -17,7 +20,22 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+  },
+  {
+    path: '/regist-player',
+    name: 'RegistPlayer',
+    component: RegistPlayer
+  },
+  {
+    path: '/confirm-role',
+    name: 'ConfirmRole',
+    component: ConfirmRole
+  },
+  {
+    path: '/battle',
+    name: 'Battle',
+    component: Battle
+  },
 ]
 
 const router = new VueRouter({
