@@ -27,12 +27,12 @@ const routes = [
     component: RegistPlayer
   },
   {
-    path: '/confirm-role',
+    path: '/confirm-role/:gameId',
     name: 'ConfirmRole',
     component: ConfirmRole
   },
   {
-    path: '/battle',
+    path: '/battle/:gameId',
     name: 'Battle',
     component: Battle
   },

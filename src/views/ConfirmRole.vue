@@ -1,40 +1,43 @@
 <template>
   <div class="confirm-role">
     <ul>
-      <li v-for="player in players">
+      <li v-for="(player, index) in players">
         {{ player.name }}
-        <button type="submit" class="btn btn-primary">かくにん</button>
+        <button type="submit" class="btn btn-primary" v-on:click="displayRole(index)">かくにん</button>
       </li>
     </ul>
     <div class="btn-container">
-      <button type="submit" class="btn btn-primary">OK</button>
+      <router-link :to="{ name: 'Battle', params: { gameId: gameId }}">OK</router-link>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'RegistPlayer',
+  name: 'CopnfirmRole',
   data() {
     return {
-      players: [
-        {
-          'player_id': '1', 'name': 'わん', 'role': 'insider',
-        },
-        {
-          'player_id': '2', 'name': 'に', 'role': 'commons',
-        },
-        {
-          'player_id': '3', 'name': 'さん', 'role': 'commons',
-        },
-        {
-          'player_id': '4', 'name': 'し', 'role': 'master',
-        },
-        {
-          'player_id': '5', 'name': 'ご', 'role': 'commons',
-        }
-      ]
+      players: [],
+      gameId: 0
     };
+  },
+  mounted() {
+    this.players = this.$store.getters.getPlayers;
+    this.gameId = this.$store.getters.getGameId;
+    console.log(this.players);
+  },
+  methods: {
+    displayRole(index) {
+      let rolesRuby = {
+        'common': "市民",
+        'master': "マスター",
+        'insider': "インサイダー"
+      };
+
+      alert(
+        this.players[index].name + "は「" + rolesRuby[this.players[index].role] + "」です"
+      );
+    }
   }
 }
 </script>
