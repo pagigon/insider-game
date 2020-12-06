@@ -19,7 +19,7 @@ export default {
   name: 'Battle',
   data() {
     return {
-      constTime: 10,
+      constTime: 300,
       firstTimer: 0,
       secondTimer: 0,
       timerObj: null,
