@@ -1,12 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/regist-player">RegistPlayer</router-link> |
-      <router-link to="/confirm-role">ConfirmRole</router-link> |
-      <router-link to="/battle">Battle</router-link> |
-    </div>
+    <h1>INSIDER GAME</h1>
     <router-view/>
   </div>
 </template>
