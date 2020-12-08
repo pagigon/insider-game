@@ -48,9 +48,6 @@ export default {
           }
         )
         .then(res => {
-          console.log(res);
-          console.log(res.data.body.gameId);
-
           this.$store.dispatch("updateGameId", res.data.body.gameId);
 
           this.$router.push({ name: 'ConfirmRole', query: { gameId: res.data.body.gameId }})
@@ -58,25 +55,6 @@ export default {
         .catch(() => {
           alert("通信に失敗しました。");
         });
-    },
-    mockRegist(players) {
-      players.forEach(function(player, index) {
-        player.id = index + 1;
-
-        player.role = 'common';
-        if (index === 1) {
-          player.role = 'master';
-        } else if (index === 3) {
-          player.role = 'insider';
-        }
-
-        players[index] = player;
-      });
-
-      return {
-        game_id: 444,
-        players: players
-      }
     }
   }
 }
