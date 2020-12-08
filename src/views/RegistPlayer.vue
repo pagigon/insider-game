@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'RegistPlayer',
   data() {
@@ -30,34 +32,29 @@ export default {
     addPlayer() {
       this.players.push({ name: ''});
     },
-    regist() {
-      var result = this.mockRegist(this.players);
-      console.log(result);
+    async regist() {
+      console.log(this.players);
 
-      this.$store.dispatch("updateGameId", result.game_id);
-      this.$store.dispatch("updatePlayers", result.players);
-      console.log(this.$store.getters.getPlayers);
+      let postData = [];
+      this.players.forEach(player =>{
+        postData.push(player.name);
+      })
 
-      this.$router.push({ name: 'ConfirmRole', params: { gameId: result.game_id }})
-    },
-    mockRegist(players) {
-      players.forEach(function(player, index) {
-        player.id = index + 1;
+      await axios
+        .post(
+          "https://6rdb8uj2l8.execute-api.ap-northeast-1.amazonaws.com/dev/regist",
+          {
+            players: postData
+          }
+        )
+        .then(res => {
+          this.$store.dispatch("updateGameId", res.data.body.gameId);
 
-        player.role = 'common';
-        if (index === 1) {
-          player.role = 'master';
-        } else if (index === 3) {
-          player.role = 'insider';
-        }
-
-        players[index] = player;
-      });
-
-      return {
-        game_id: 444,
-        players: players
-      }
+          this.$router.push({ name: 'ConfirmRole', query: { gameId: res.data.body.gameId }})
+        })
+        .catch(() => {
+          alert("通信に失敗しました。");
+        });
     }
   }
 }
