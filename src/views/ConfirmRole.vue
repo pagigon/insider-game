@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'CopnfirmRole',
   data() {
@@ -22,11 +24,27 @@ export default {
     };
   },
   mounted() {
-    this.players = this.$store.getters.getPlayers;
-    this.gameId = this.$store.getters.getGameId;
-    console.log(this.players);
+    console.log(2);
+    this.loadPlayers();
   },
   methods: {
+    async loadPlayers() {
+      const gameId = this.$route.query.gameId;
+
+      await axios
+        .get(
+          "https://6rdb8uj2l8.execute-api.ap-northeast-1.amazonaws.com/dev/confirm?gameId=" + gameId
+        )
+        .then(res => {
+          res.data.body.players.forEach(player => {
+            this.players.push(player);
+          })
+          this.gameId = gameId;
+        })
+        .catch(() => {
+          alert("通信に失敗しました。ページをリロードしてください。");
+        });
+    },
     displayRole(index) {
       let rolesRuby = {
         'common': "市民",
@@ -34,8 +52,13 @@ export default {
         'insider': "インサイダー"
       };
 
+      let theme = '';
+      if (this.players[index].role === 'master' || this.players[index].role === 'insider') {
+        theme = 'テーマは「' + this.players[index].theme + '」です。';
+      }
+
       alert(
-        this.players[index].name + "は「" + rolesRuby[this.players[index].role] + "」です"
+        this.players[index].name + "は「" + rolesRuby[this.players[index].role] + "」です。" + theme
       );
     }
   }
