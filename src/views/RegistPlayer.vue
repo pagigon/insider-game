@@ -33,8 +33,6 @@ export default {
       this.players.push({ name: ''});
     },
     async regist() {
-      console.log(this.players);
-
       let postData = [];
       this.players.forEach(player =>{
         postData.push(player.name);
