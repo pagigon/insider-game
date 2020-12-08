@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import RegistPlayer from '../views/RegistPlayer.vue'
 import ConfirmRole from '../views/ConfirmRole.vue'
 import Battle from '../views/Battle.vue'
+import RegistTheme from '../views/RegistTheme.vue'
 
 Vue.use(VueRouter)
 
@@ -35,6 +36,11 @@ const routes = [
     path: '/battle/:gameId',
     name: 'Battle',
     component: Battle
+  },
+  {
+    path: '/regist-theme',
+    name: 'RegistTheme',
+    component: RegistTheme
   },
 ]
 
