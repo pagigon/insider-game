@@ -32,7 +32,7 @@ export default {
 
       await axios
         .get(
-          "https://6rdb8uj2l8.execute-api.ap-northeast-1.amazonaws.com/dev/confirm?gameId=" + gameId
+          "https://v11izvxekf.execute-api.ap-northeast-1.amazonaws.com/prod/confirm?gameId=" + gameId
         )
         .then(res => {
           res.data.body.players.forEach(player => {

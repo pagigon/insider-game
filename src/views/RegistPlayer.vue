@@ -40,7 +40,7 @@ export default {
 
       await axios
         .post(
-          "https://6rdb8uj2l8.execute-api.ap-northeast-1.amazonaws.com/dev/regist",
+          "https://v11izvxekf.execute-api.ap-northeast-1.amazonaws.com/prod/regist",
           {
             players: postData
           }
