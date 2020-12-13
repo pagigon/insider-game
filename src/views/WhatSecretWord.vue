@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>{{ own.name }}は{{ own.role }}です。</div>
+    <div>{{ own.name }}は『{{ roleList[own.role] }}』です。</div>
     <div v-if="own.role == 'master' || own.role == 'insider'">お題は「{{ own.theme }}」です。</div>
     <Timer @getElapsedTime="getElapsedTime" v-if="!resetFlag" :message="message" :constTime="constTime"/>
     <div class="btn-container" v-if="isHost">
@@ -54,6 +54,7 @@ export default {
       websocket: {},
       isHost: false,
       constTime: 300,
+      roleList: {},
       own: {},
       message: '',
       resetFlag: false,
@@ -78,6 +79,12 @@ export default {
         this.own = player;
       }
     });
+
+    this.roleList = {
+      'insider': 'インサイダー',
+      'master': 'マスター',
+      'common': '市民'
+    };
 
     this.websocket.onmessage = this.receiveResponse;
   },
