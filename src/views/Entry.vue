@@ -1,5 +1,6 @@
 <template>
   <div class="regist-player">
+    <WebSocket/>
     <div>
       <input v-model="name" placeholder="Name">
     </div>
@@ -13,8 +14,13 @@
 </template>
 
 <script>
+import WebSocket from '@/components/WebSocket.vue'
+
 export default {
   name: 'Entry',
+  components: {
+    WebSocket
+  },
   data() {
     return {
       name: '',
@@ -24,11 +30,14 @@ export default {
     }
   },
   mounted() {
-    let websocket = new WebSocket('wss://uynhuto1e2.execute-api.ap-northeast-1.amazonaws.com/dev');
-    this.websocket = websocket;
-    this.$store.dispatch("setWebSocket", websocket);
+    if (this.$route.query.gameId !== undefined) {
+      this.gameId = this.$route.query.gameId;
+    }
 
-    this.websocket.onmessage = this.receiveResponse;
+    this.$nextTick(() => {
+      this.websocket = this.$store.getters.getWebSocket;
+      this.websocket.onmessage = this.receiveResponse;
+    })
   },
   methods: {
     receiveResponse(event) {
@@ -40,7 +49,9 @@ export default {
         this.$router.push({
           name: 'WaitPlayers',
           query: {
-            gameId: response.gameId,
+            gameId: response.gameId
+          },
+          params: {
             name: this.name
           }
         });

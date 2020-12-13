@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     gameId: 0,
     players: [],
-    websocket: {},
+    websocket: null,
     isHost: false
   },
   getters: {

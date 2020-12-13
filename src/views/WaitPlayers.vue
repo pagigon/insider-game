@@ -18,6 +18,9 @@
 <script>
 export default {
   name: 'WaitPlayers',
+  props: {
+    name: String
+  },
   data() {
     return {
       players: [],
@@ -30,10 +33,10 @@ export default {
   mounted() {
     this.websocket = this.$store.getters.getWebSocket;
 
-    this.players.push(this.$route.query.name);
+    this.players.push(this.name);
     this.isHost = this.$store.getters.getIsHost;
     this.gameId = this.$route.query.gameId;
-    this.url = location.href.replace(/\?.*$/,"") + '?gameId=' + this.gameId;
+    this.url = location.protocol + '//' + location.host + '/#/entry' + '?gameId=' + this.gameId;
 
     this.websocket.onmessage = this.receiveResponse;
   },
@@ -47,10 +50,12 @@ export default {
       }
 
       if (response.action == "start") {
+        this.$store.dispatch("updatePlayers", response.players);
+
         this.$router.push({
           name: 'WhatSecretWord',
           query: {
-            gameId: response.gameId
+            gameId: this.gameId
           }
         })
       }
@@ -58,10 +63,8 @@ export default {
     doCopy() {
       this.$copyText(this.url).then(function (e) {
         alert('Copied')
-        console.log(e)
       }, function (e) {
         alert('Can not copy')
-        console.log(e)
       })
     },
     startGame() {

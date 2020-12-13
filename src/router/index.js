@@ -53,7 +53,8 @@ const routes = [
   {
     path: '/wait-players',
     name: 'WaitPlayers',
-    component: WaitPlayers
+    component: WaitPlayers,
+    props: true
   },
   {
     path: '/what-secret-word',
