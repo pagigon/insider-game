@@ -2,8 +2,6 @@
   <div class="confirm-role">
     <div>{{ this.message }}</div>
     <div>{{ this.timer }}</div>
-    <input type="button" value="スタート" v-on:click="countStart()">
-    <input type="button" value="ストップ" v-on:click="countStop()">
   </div>
 </template>
 
@@ -22,6 +20,8 @@ export default {
   },
   mounted() {
     this.timer = this.constTime;
+
+    this.timerObj = setInterval(this.showPassage, 1000);
   },
   methods: {
     showPassage() {
@@ -29,15 +29,9 @@ export default {
         this.timer--;
         this.$emit("getElapsedTime", this.constTime - this.timer)
       } else {
-        alert("You're Loser...");
+        alert("時間切れです...");
         clearInterval(this.timerObj);
       }
-    },
-    countStart() {
-      this.timerObj = setInterval(this.showPassage, 1000);
-    },
-    countStop() {
-      clearInterval(this.timerObj);
     }
   }
 }

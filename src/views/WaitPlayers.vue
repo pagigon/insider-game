@@ -1,5 +1,5 @@
 <template>
-  <div class="confirm-role">
+  <div>
     <div>
       <input v-model=url readonly>
       <button type="button" @click="doCopy">Copy!</button>

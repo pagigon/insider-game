@@ -1,5 +1,5 @@
 <template>
-  <div class="regist-player">
+  <div>
     <WebSocket/>
     <div>
       <input v-model="name" placeholder="Name">

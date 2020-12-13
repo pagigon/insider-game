@@ -1,11 +1,23 @@
 <template>
-  <div class="confirm-role">
+  <div>
     <div>{{ own.name }}は{{ own.role }}です。</div>
     <div v-if="own.role == 'master' || own.role == 'insider'">お題は「{{ own.theme }}」です。</div>
     <Timer @getElapsedTime="getElapsedTime" v-if="!resetFlag" :message="message" :constTime="constTime"/>
     <div class="btn-container" v-if="isHost">
       <button class="btn btn-primary" v-on:click="nextGame()" v-if="!isSecondPart">NEXT</button>
-      <router-link :to="{ name: 'VoteStage'}" v-else>投票へ</router-link>
+    </div>
+    <div v-if="isSecondPart">
+      <div>インサイダーだと思う人に投票してください</div>
+      <div>
+        <select v-model="targetPlayer">
+          <option disabled value="">選択</option>
+          <option v-for="player in players" :value="player.id">{{ player.name }}</option>
+        </select>
+      </div>
+      <div>
+        <button class="btn btn-primary" v-on:click="vote()" v-if="!finishVote">投票する</button>
+        <div v-else>投票済みです</div>
+      </div>
     </div>
     <div>
       <table>
@@ -46,7 +58,10 @@ export default {
       message: '',
       resetFlag: false,
       elapsedTime: 0,
-      isSecondPart: false
+      isSecondPart: false,
+      targetPlayer: '',
+      finishVote: false,
+      voteList: []
     };
   },
   mounted() {
@@ -77,7 +92,48 @@ export default {
         this.$nextTick(() => {
           this.resetFlag=false;
         });
+
+        this.isSecondPart = true;
+        this.message = 'インサイダーを探せ！！';
       }
+
+      if (response.action == "vote") {
+        this.voteList.push(
+          {
+            "votePlayerId": response.vote_player_id,
+            "targetPlayerId": response.target_player_id
+          }
+        );
+
+        if (this.voteList.length == this.players.length) {
+          let result = {};
+          this.players.forEach((player) => {
+            result[player.id] = 0;
+          });
+
+          this.voteList.forEach((vote) => {
+            result[vote.targetPlayerId]++;
+          });
+
+          let target = this.sortMaxValue(result)
+          this.players.forEach((player) => {
+            if (target == player.id) {
+              alert(player.name + 'が処刑されます。');
+            }
+          });
+        }
+      }
+    },
+    sortMaxValue(list) {
+      var maxKey = '';
+      // 配列内で最大の値を調べる
+      for(let key in list) {
+        if(maxKey === '' || list[key] > list[maxKey]) {
+            maxKey = key;
+        }
+      }
+
+      return maxKey;
     },
     getElapsedTime(elapsedTime) {
       this.elapsedTime = elapsedTime;
@@ -89,15 +145,18 @@ export default {
         elapsedTime: this.elapsedTime
       }
       this.websocket.send(JSON.stringify(request));
+    },
+    vote() {
+      let request = {
+        action: 'vote',
+        gameId: this.gameId,
+        votePlayerId: this.own.id,
+        targetPlayerId: this.targetPlayer
+      }
+      this.websocket.send(JSON.stringify(request));
 
-      this.isSecondPart = true;
+      this.finishVote = true;
     }
   }
 }
 </script>
-
-<style>
-ul {
-  list-style: none;
-}
-</style>
