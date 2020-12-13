@@ -44,6 +44,7 @@ export default {
       let response = JSON.parse(event.data);
 
       if (response.action == "setname") {
+        this.$store.dispatch("setPlayerId", response.playerId);
         this.$store.dispatch("updateGameId", response.gameId);
 
         this.$router.push({

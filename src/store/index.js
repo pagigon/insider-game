@@ -8,7 +8,8 @@ export default new Vuex.Store({
     gameId: 0,
     players: [],
     websocket: null,
-    isHost: false
+    isHost: false,
+    playerId: ''
   },
   getters: {
     getGameId(state) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     getIsHost(state) {
       return state.isHost;
+    },
+    getPlayerId(state) {
+      return state.playerId;
     }
   },
   mutations: {
@@ -36,6 +40,9 @@ export default new Vuex.Store({
     },
     setIsHost(state, playload) {
       state.isHost = playload.isHost;
+    },
+    setPlayerId(state, playload) {
+      state.playerId = playload.playerId;
     }
   },
   actions: {
@@ -50,6 +57,9 @@ export default new Vuex.Store({
     },
     setIsHost({ commit }, isHost) {
       commit("setIsHost", { isHost });
+    },
+    setPlayerId({ commit }, playerId) {
+      commit("setPlayerId", { playerId });
     }
   },
   modules: {
