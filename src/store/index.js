@@ -6,25 +6,37 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     gameId: 0,
-    players: []
+    players: [],
+    websocket: {},
+    isHost: false
   },
   getters: {
     getGameId(state) {
       return state.gameId;
     },
     getPlayers(state) {
-      console.log(state);
       return state.players;
+    },
+    getWebSocket(state) {
+      return state.websocket;
+    },
+    getIsHost(state) {
+      return state.isHost;
     }
   },
   mutations: {
     setGameId(state, playload) {
       state.gameId = playload.gameId;
-      console.log(state);
     },
     setPlayers(state, playload) {
       state.players = playload.players;
     },
+    setWebSocket(state, playload) {
+      state.websocket = playload.websocket;
+    },
+    setIsHost(state, playload) {
+      state.isHost = playload.isHost;
+    }
   },
   actions: {
     updateGameId({ commit }, gameId) {
@@ -33,6 +45,12 @@ export default new Vuex.Store({
     updatePlayers({ commit }, players) {
       commit("setPlayers", { players });
     },
+    setWebSocket({ commit }, websocket) {
+      commit("setWebSocket", { websocket });
+    },
+    setIsHost({ commit }, isHost) {
+      commit("setIsHost", { isHost });
+    }
   },
   modules: {
   }

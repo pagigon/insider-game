@@ -5,6 +5,9 @@ import RegistPlayer from '../views/RegistPlayer.vue'
 import ConfirmRole from '../views/ConfirmRole.vue'
 import Battle from '../views/Battle.vue'
 import RegistTheme from '../views/RegistTheme.vue'
+import Entry from '../views/Entry.vue'
+import WaitPlayers from '../views/WaitPlayers.vue'
+import WhatSecretWord from '../views/WhatSecretWord.vue'
 
 Vue.use(VueRouter)
 
@@ -41,6 +44,21 @@ const routes = [
     path: '/regist-theme',
     name: 'RegistTheme',
     component: RegistTheme
+  },
+  {
+    path: '/entry',
+    name: 'Entry',
+    component: Entry
+  },
+  {
+    path: '/wait-players',
+    name: 'WaitPlayers',
+    component: WaitPlayers
+  },
+  {
+    path: '/what-secret-word',
+    name: 'WhatSecretWord',
+    component: WhatSecretWord
   },
 ]
 
