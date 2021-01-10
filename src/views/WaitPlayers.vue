@@ -4,6 +4,13 @@
       <input v-model=url readonly>
       <button type="button" @click="doCopy">Copy!</button>
     </div>
+    <div v-if="isHost">
+      プレイヤーが参加するのを待っています・・・<br>
+      「START」を押すとゲームが始まります。
+    </div>
+    <div v-else>
+      ホストがゲームを開始するのを待っています・・・
+    </div>
     <ul>
       <li v-for="player in players">
         {{ player }}
