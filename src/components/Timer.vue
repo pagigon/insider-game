@@ -32,6 +32,9 @@ export default {
         alert("時間切れです...");
         clearInterval(this.timerObj);
       }
+    },
+    finishTimer() {
+      clearInterval(this.timerObj);
     }
   }
 }

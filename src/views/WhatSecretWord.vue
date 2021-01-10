@@ -2,9 +2,12 @@
   <div>
     <div>{{ own.name }}は『{{ roleList[own.role] }}』です。</div>
     <div v-if="own.role == 'master' || own.role == 'insider'">お題は「{{ own.theme }}」です。</div>
-    <Timer @getElapsedTime="getElapsedTime" v-if="!resetFlag" :message="message" :constTime="constTime"/>
-    <div class="btn-container" v-if="isHost">
-      <button class="btn btn-primary" v-on:click="nextGame()" v-if="!isSecondPart">NEXT</button>
+    <Timer @getElapsedTime="getElapsedTime"  ref="timer" v-if="!resetFlag" :message="message" :constTime="constTime"/>
+    <div class="btn-container" v-if="isHost && !isSecondPart">
+      <div>
+        お題が当てられたらボタンを押してください。
+      </div>
+      <button class="btn btn-primary" v-on:click="nextGame()">NEXT</button>
     </div>
     <div v-if="isSecondPart">
       <div>インサイダーだと思う人に投票してください</div>
@@ -152,6 +155,8 @@ export default {
         elapsedTime: this.elapsedTime
       }
       this.websocket.send(JSON.stringify(request));
+
+      this.$refs.timer.finishTimer();
     },
     vote() {
       let request = {

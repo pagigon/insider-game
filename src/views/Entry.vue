@@ -5,7 +5,10 @@
       <input v-model="name" placeholder="Name">
     </div>
     <div>
-      <input v-model="gameId" placeholder="GameID">
+      <input v-model="gameId" placeholder="GameID" :disabled="gameId==''">
+    </div>
+    <div>
+      ※ホストはGameIDを空のまま送信してください
     </div>
     <div class="btn-container">
       <button class="btn btn-primary" v-on:click="setName()">送信</button>
