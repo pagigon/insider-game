@@ -48,3 +48,7 @@
     "not dead"
   ]
 }
+
+"engines": {
+  "node": "16.x"
+}
